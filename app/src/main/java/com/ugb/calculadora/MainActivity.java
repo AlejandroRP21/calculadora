@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 respuesta = calcularFactorial((int) num1);
                 break;
             case 7:
-                respuesta = Math.sqrt(num1);
+                respuesta = Math.pow(num1,1.0 / num2);
                 break;
         }
         tempVal = findViewById(R.id.lblrespuesta);
