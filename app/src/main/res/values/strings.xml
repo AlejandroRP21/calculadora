@@ -1,14 +1,18 @@
 <resources>
-    <string name="app_name">calculadora</string>
-    <string-array name="spnopciones">
-        <item>Suma</item>
-        <item>Resta</item>
-        <item>Multiplicacion</item>
-        <item>Division</item>
-        <item>Porcentaje</item>
-        <item>Exponenciacion</item>
-        <item>Factorial</item>
-        <item>Raiz</item>
-
+    <string name="app_name">conversores</string>
+    <string-array name="spnLongitud">
+        <item>metros</item>
+        <item>Cm</item>
+        <item>pulgada</item>
+        <item>pie</item>
+        <item>baras</item>
+        <item>yardas</item>
+        <item>km</item>
+        <item>Millas</item>
+    </string-array>
+    <string-array name="spnMoneda">
+        <item>Dolar </item>
+        <item>Peso Mexicano</item>
+        <item>Colon Salvadoreño</item>
     </string-array>
 </resources>
