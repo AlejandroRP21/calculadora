@@ -121,40 +121,41 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60dp"
-                        android:layout_marginTop="60dp" />
+                        android:layout_marginTop="60dp"
+                        android:entries="@array/spnMoneda"/>
 
                     <Spinner
                         android:id="@+id/spnAMoneda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60dp"
-                        android:layout_marginTop="120dp" />
-
+                        android:layout_marginTop="120dp"
+                        android:entries="@array/spnMoneda"/>
                     <EditText
-                        android:id="@+id/txtCantidadMoneda"
+                        android:id="@+id/txtCantidadDeMoneda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/spnAMoneda"
                         android:layout_marginTop="40dp"
-                        android:hint="Cantidad a convertir"
-                        android:text="Cantidad a Convertir" />
+                        android:hint="Cantidad a convertir" />
 
                     <Button
                         android:id="@+id/btnCalcularMoneda"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/txtCantidadMoneda"
+                        android:layout_below="@+id/txtCantidadDeMoneda"
                         android:layout_marginTop="40dp"
                         android:text="CONVERTIR" />
+
 
                     <TextView
                         android:id="@+id/txtRespuestaMoneda"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/btnCalcularMoneda"
-                        android:layout_marginTop="20dp"
-                        android:text="Respuesta:"
-                        android:textSize="24dp" />
+                        android:layout_below="@+id/btnCalcularMoneda"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="40dp"
+                        android:text="Respuesta: ?" />
                 </RelativeLayout>
 
 

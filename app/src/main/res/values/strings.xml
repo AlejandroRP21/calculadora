@@ -13,6 +13,6 @@
     <string-array name="spnMoneda">
         <item>Dolar </item>
         <item>Peso Mexicano</item>
-        <item>Colon Salvadoreño</item>
+        <item>EURO</item>
     </string-array>
 </resources>
