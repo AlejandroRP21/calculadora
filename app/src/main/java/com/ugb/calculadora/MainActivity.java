@@ -1,72 +1,47 @@
 package com.ugb.calculadora;
-
-
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.util.Log;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
-    SensorManager sensorManager;
-    Sensor sensor;
-    SensorEventListener sensorEventListener;
-    TextView tempVal;
 
+
+public class MainActivity extends AppCompatActivity {
+    private EditText editTextConsumo;
+    private Button buttonCalcular;
+    private TextView textViewResultado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tempVal = findViewById(R.id.lblSensorAcelerometro);
-        acvtivarSensorAcelerometro();
-    }
-    @Override
-    protected void onResume() {
-        inicar();
-        super.onResume();
-    }
-    @Override
-    protected void onPause() {
-        detener();
-        super.onPause();
-    }
-    private void acvtivarSensorAcelerometro(){
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        if(sensor==null){
-            tempVal.setText("Tu dispositivo NO cuenta con el sensor acelerometro.");
-            finish();
-        }
-        sensorEventListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent sensorEvent) {
-                tempVal.setText("Acelerometro: X="+ sensorEvent.values[0]+ "; Y="+ sensorEvent.values[1] +"; Z="+
-                        sensorEvent.values[2]);
-            }
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int i) {
 
+        editTextConsumo = findViewById(R.id.editTextConsumo);
+        buttonCalcular = findViewById(R.id.buttonCalcular);
+        textViewResultado = findViewById(R.id.textViewResultado);
+
+        buttonCalcular.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                calcularCostoAgua();
             }
-        };
+        });
     }
-    private void inicar(){
-        sensorManager.registerListener(sensorEventListener, sensor,2000*1000 );
-    }
-    private void detener(){
-        sensorManager.unregisterListener(sensorEventListener);
+
+    private void calcularCostoAgua() {
+        int consumo = Integer.parseInt(editTextConsumo.getText().toString());
+        double costoTotal;
+
+        if (consumo <= 18) {
+            costoTotal = 6.0;
+        } else if (consumo <= 28) {
+            costoTotal = 6.0 + 0.45 * (consumo - 18);
+        } else {
+            costoTotal = 6.0 + 0.45 * (28 - 18) + 0.65 * (consumo - 28);
+        }
+
+        textViewResultado.setText("El costo total es: $" + costoTotal);
     }
 }
-
