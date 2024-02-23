@@ -1,6 +1,5 @@
 package com.ugb.calculadora;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,24 +12,28 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
 
+
     TabHost tbh;
-            TextView tempVal;
-            Spinner spn;
-            Button btn;
-            Conversores objConversor = new Conversores();
-            CalcularMoneda objMoneda = new CalcularMoneda();
-            CalcularAlmacenamiento objAlmacenamiento = new CalcularAlmacenamiento();
-            CalcularTiempo objTiempo = new CalcularTiempo();
-            CalcularMasa objMasa = new CalcularMasa();
-            CalcularVolumen objVolumen = new CalcularVolumen();
-            CalcularTransferencia objTransferencia = new CalcularTransferencia();
+    TextView tempVal;
+    Spinner spn;
+    Button btn;
+    Conversores objConversor = new Conversores();
+    CalcularMoneda objMoneda = new CalcularMoneda();
+    CalcularAlmacenamiento objAlmacenamiento = new CalcularAlmacenamiento();
+    CalcularTiempo objTiempo = new CalcularTiempo();
+    CalcularMasa objMasa = new CalcularMasa();
+    CalcularVolumen objVolumen = new CalcularVolumen();
+    CalcularTransferencia objTransferencia = new CalcularTransferencia();
 
 
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -46,162 +49,162 @@ protected void onCreate(Bundle savedInstanceState) {
 
         btn = findViewById(R.id.btnConvertir1);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeLongitud);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeLongitud);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnALongitud);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnALongitud);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad1);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objConversor.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad1);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objConversor.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
         btn = findViewById(R.id.btnConvertir2);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeMoneda);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeMoneda);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnAMoneda);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnAMoneda);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad2);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objMoneda.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad2);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objMoneda.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
         btn = findViewById(R.id.btnConvertir3);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeAlmacenamiento);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeAlmacenamiento);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnAalmacenamiento);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnAalmacenamiento);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad3);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objAlmacenamiento.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad3);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objAlmacenamiento.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
         btn = findViewById(R.id.btnConvertir4);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeTiempo);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeTiempo);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnATiempo);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnATiempo);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad4);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objTiempo.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad4);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objTiempo.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
         btn = findViewById(R.id.btnConvertir5);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeVolumen);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeVolumen);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnAVolumen);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnAVolumen);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad5);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objVolumen.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad5);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objVolumen.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
         btn = findViewById(R.id.btnConvertir6);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeMasa);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeMasa);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnAMasa);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnAMasa);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad6);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objMasa.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad6);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objMasa.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
         btn = findViewById(R.id.btnConvertir7);
         btn.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View view) {
-        spn = findViewById(R.id.spnDeTransferencia);
-        int de = spn.getSelectedItemPosition();
+            @Override
+            public void onClick(View view) {
+                spn = findViewById(R.id.spnDeTransferencia);
+                int de = spn.getSelectedItemPosition();
 
-        spn = findViewById(R.id.spnATransferencia);
-        int a = spn.getSelectedItemPosition();
+                spn = findViewById(R.id.spnATransferencia);
+                int a = spn.getSelectedItemPosition();
 
-        tempVal = findViewById(R.id.txtCantidad7);
-        try {
-        double cantidad = Double.parseDouble(tempVal.getText().toString());
-        double resp = objTransferencia.convertir(0, de, a, cantidad);
-        mostrarResultado(resp);
-        } catch (NumberFormatException e) {
-        mostrarError("Ingresa una cantidad válida.");
-        }
-        }
+                tempVal = findViewById(R.id.txtCantidad7);
+                try {
+                    double cantidad = Double.parseDouble(tempVal.getText().toString());
+                    double resp = objTransferencia.convertir(0, de, a, cantidad);
+                    mostrarResultado(resp);
+                } catch (NumberFormatException e) {
+                    mostrarError("Ingresa una cantidad válida.");
+                }
+            }
         });
 
-        }
+    }
 
-private void mostrarResultado(double resultado) {
+    private void mostrarResultado(double resultado) {
         String mensaje = String.format("Respuesta: %.1f", resultado);
         Toast.makeText(getApplicationContext(), mensaje, Toast.LENGTH_LONG).show();
-        }
+    }
 
-private void mostrarError(String mensaje) {
+    private void mostrarError(String mensaje) {
         Toast.makeText(getApplicationContext(), "Error: " + mensaje, Toast.LENGTH_LONG).show();
-        }
-        }
+    }
+}
 
 class CalcularMoneda {
     double[][] valores =  {
@@ -225,7 +228,7 @@ class Conversores {
 
 class CalcularAlmacenamiento {
     double[][] valores =  {
-            {1,0.001,0.000001,1e-9,1e-12,1e-15,8,0.008,0.000008,8e-9,8e-12,8e-15}
+            {1,0.125,0.000125,0.000000125}
     };
 
     public double convertir(int opcion, int de, int a, double cantidad) {
@@ -245,7 +248,7 @@ class CalcularTiempo {
 
 class CalcularVolumen {
     double[][] valores =  {
-            {0.001,1,1000,1000000,0.035314666721489, 61.0237440,0.2641720523}
+            {1, 1000,0.001,0.0353, 61.0237440, 0.264172,2.11338,4.22675}
     };
 
     public double convertir(int opcion, int de, int a, double cantidad) {
@@ -255,7 +258,7 @@ class CalcularVolumen {
 
 class CalcularMasa {
     double[][] valores =  {
-            {1,0.001,1.0e-6,1.0e-9,0.45359237,0.028349523125,907.18474,1000,6350.29}
+            {1,0.001,1000,1000000,0.00220462,0.035274,907.18474,1000,6350.29}
     };
 
     public double convertir(int opcion, int de, int a, double cantidad) {
@@ -265,7 +268,7 @@ class CalcularMasa {
 
 class CalcularTransferencia {
     double[][] valores =  {
-            {1,1000,100000,1000000,1000000000,1000000000}
+            {1,1000,0.001,1000000,0.125}
     };
 
     public double convertir(int opcion, int de, int a, double cantidad) {
