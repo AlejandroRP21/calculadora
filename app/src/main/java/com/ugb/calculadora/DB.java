@@ -8,10 +8,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 public class DB extends SQLiteOpenHelper {
-    private static final String dbname = "amigos";
+    private static final String dbname = "tienda";
     private static final int v =1;
-    private static final String SQLdb = "CREATE TABLE amigos(idAmigo integer primary key autoincrement, " +
-            "nombre text, direccion text, telefono text, email text, dui text, foto text)";
+    private static final String SQLdb = "CREATE TABLE tienda(id text, rev text, idProducto text, " +
+            "codigo text, descripcion text, marca text, presentacion text, precio text, foto text)";
     public DB(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
         super(context, dbname, factory, v);
     }
@@ -28,13 +28,13 @@ public class DB extends SQLiteOpenHelper {
             SQLiteDatabase db = getWritableDatabase();
             String sql = "";
             if( accion.equals("nuevo") ){
-                sql = "INSERT INTO amigos(nombre,direccion,telefono,email,dui, foto) VALUES('"+ datos[1] +"', '"+ datos[2] +"', '"+ datos[3] +"', " +
-                        "'"+ datos[4] +"','"+ datos[5] +"', '"+ datos[6] +"' )";
+                sql = "INSERT INTO tienda(id,rev,idProducto,codigo,descripcion,marca,presentacion,precio,foto) VALUES('"+ datos[0] +"','"+ datos[1] +"','"+ datos[2] +"', '"+
+                        datos[3] +"', '"+ datos[4] +"','"+ datos[5] +"','"+ datos[6] +"', '"+ datos[7] +"', '"+ datos[8] +"' )";
             } else if (accion.equals("modificar")) {
-                sql = "UPDATE amigos SET nombre='"+ datos[1] +"', direccion='"+ datos[2] +"', telefono='"+ datos[3] +"', email=" +
-                        "'"+ datos[4] +"', dui='"+ datos[5] +"', foto='"+ datos[6] +"' WHERE idAmigo='"+ datos[0] +"'";
+                sql = "UPDATE tienda SET id='"+ datos[0] +"',rev='"+ datos[1] +"', codigo='"+ datos[3] +"', descripcion='"+ datos[4] +"', marca='"+ datos[5] +"', presentacion=" +
+                        "'"+ datos[6] +"', precio='"+ datos[7] +"', foto='"+ datos[8] +"' WHERE idProducto='"+ datos[2] +"'";
             } else if (accion.equals("eliminar")) {
-                sql = "DELETE FROM amigos WHERE idAmigo='"+ datos[0] +"'";
+                sql = "DELETE FROM tienda WHERE idProducto='"+ datos[2] +"'";
             }
             db.execSQL(sql);
             return "ok";
@@ -45,7 +45,7 @@ public class DB extends SQLiteOpenHelper {
     public Cursor obtener_amigos(){
         Cursor cursor;
         SQLiteDatabase db = getReadableDatabase();
-        cursor = db.rawQuery("SELECT * FROM amigos ORDER BY nombre", null);
+        cursor = db.rawQuery("SELECT * FROM tienda ORDER BY codigo", null);
         return cursor;
     }
 }

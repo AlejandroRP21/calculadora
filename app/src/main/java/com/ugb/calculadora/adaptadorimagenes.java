@@ -18,9 +18,9 @@ public class adaptadorimagenes extends BaseAdapter {
     ArrayList<amigos> datosAmigosArrayList;
     amigos datosAmigos;
     LayoutInflater layoutInflater;
-    public adaptadorimagenes(Context context, ArrayList<amigos> datosAmigosArrayList) {
+    public adaptadorimagenes(Context context, ArrayList<amigos> datosProductosArrayList) {
         this.context = context;
-        this.datosAmigosArrayList = datosAmigosArrayList;
+        this.datosAmigosArrayList = datosProductosArrayList;
     }
     @Override
     public int getCount() {
@@ -32,7 +32,7 @@ public class adaptadorimagenes extends BaseAdapter {
     }
     @Override
     public long getItemId(int i) {
-        return Long.parseLong(datosAmigosArrayList.get(i).getIdAmigo());
+        return i;//Long.parseLong(datosProductosArrayList.get(i).getIdproductos());
     }
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
@@ -41,16 +41,22 @@ public class adaptadorimagenes extends BaseAdapter {
         try{
             datosAmigos = datosAmigosArrayList.get(i);
 
-            TextView tempVal = itemView.findViewById(R.id.lblnombre);
-            tempVal.setText(datosAmigos.getNombre());
+            TextView tempVal = itemView.findViewById(R.id.lblcodigo);
+            tempVal.setText(datosAmigos.getCodigo());
 
-            tempVal = itemView.findViewById(R.id.lbltelefono);
-            tempVal.setText(datosAmigos.getTelefono());
+            tempVal = itemView.findViewById(R.id.lbldescripcion);
+            tempVal.setText(datosAmigos.getDescripcion());
 
-            tempVal = itemView.findViewById(R.id.lblemail);
-            tempVal.setText(datosAmigos.getEmail());
+            tempVal = itemView.findViewById(R.id.lblprecio);
+            tempVal.setText(datosAmigos.getPrecio());
 
-            Bitmap imageBitmap = BitmapFactory.decodeFile(datosAmigos.getUrlFotoAmigo());
+            tempVal = itemView.findViewById(R.id.lblpresentacion);
+            tempVal.setText(datosAmigos.getPresentacion());
+
+            tempVal = itemView.findViewById(R.id.lblmarca);
+            tempVal.setText(datosAmigos.getMarca());
+
+            Bitmap imageBitmap = BitmapFactory.decodeFile(datosAmigos.getUrlFotoProdu());
             ImageView img = itemView.findViewById(R.id.imgFoto);
             img.setImageBitmap(imageBitmap);
         }catch (Exception e){

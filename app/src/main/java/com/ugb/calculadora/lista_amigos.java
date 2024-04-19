@@ -1,6 +1,5 @@
 package com.ugb.calculadora;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -22,6 +21,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 public class lista_amigos extends AppCompatActivity {
@@ -33,10 +35,16 @@ public class lista_amigos extends AppCompatActivity {
     final ArrayList<amigos> alAmigosCopy = new ArrayList<amigos>();
     amigos datosAmigos;
     FloatingActionButton btn;
+    JSONArray datosJSON; //para los datos que vienen del servidor.
+    JSONObject jsonObject;
+    obtenerDatosServidor datosServidor;
+    detectarInternet di;
+    int posicion = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.lista_amigos);
+        db = new DB(lista_amigos.this, "", null, 1);
         btn = findViewById(R.id.fabAgregarAmigos);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,20 +53,79 @@ public class lista_amigos extends AppCompatActivity {
                 abrirActividad(paramatros);
             }
         });
-        obtenerAmigos();
+        try{
+            di = new detectarInternet(getApplicationContext());
+            if( di.hayConexionInternet() ){
+                obtenerDatosAmigosServidor();
+            }else{//offline
+                obtenerAmigos();
+            }
+        }catch (Exception e){
+            mostrarMsg("Error al cargar lista amigo: "+ e.getMessage());
+        }
         buscarAmigos();
+    }
+    private void obtenerDatosAmigosServidor(){
+        try{
+            datosServidor = new obtenerDatosServidor();
+            String data = datosServidor.execute().get();
+
+            jsonObject =new JSONObject(data);
+            datosJSON = jsonObject.getJSONArray("rows");
+            mostrarDatosAmigos();
+        }catch (Exception e){
+            mostrarMsg("Error al obtener datos de productos del server: "+ e.getMessage());
+        }
+    }
+    private void mostrarDatosAmigos(){
+        try{
+            if( datosJSON.length()>0 ){
+                lts = findViewById(R.id.ltsAmigos);
+                alAmigos.clear();
+                alAmigosCopy.clear();
+
+                JSONObject misDatosJSONObject;
+                for (int i=0; i<datosJSON.length(); i++){
+                    misDatosJSONObject = datosJSON.getJSONObject(i).getJSONObject("value");
+                    datosAmigos = new amigos(
+                            misDatosJSONObject.getString("_id"),
+                            misDatosJSONObject.getString("_rev"),
+                            misDatosJSONObject.getString("idProducto"),
+                            misDatosJSONObject.getString("codigo"),
+                            misDatosJSONObject.getString("descripcion"),
+                            misDatosJSONObject.getString("marca"),
+                            misDatosJSONObject.getString("presentacion"),
+                            misDatosJSONObject.getString("precio"),
+                            misDatosJSONObject.getString("urlCompletaFoto")
+                    );
+                    alAmigos.add(datosAmigos);
+                }
+                alAmigosCopy.addAll(alAmigos);
+
+                adaptadorimagenes adImagenes = new adaptadorimagenes(getApplicationContext(), alAmigos);
+                lts.setAdapter(adImagenes);
+
+                registerForContextMenu(lts);
+            }else{
+                mostrarMsg("No hay datos que mostrar");
+            }
+        }catch (Exception e){
+            mostrarMsg("Error al mostrar datos: "+ e.getMessage());
+        }
     }
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.mimenu, menu);
-
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        cAmigos.moveToPosition(info.position);
-        menu.setHeaderTitle("Que deseas hacer con "+ cAmigos.getString(1));//1 es el campo nombre
+        try {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+            posicion = info.position;
+            menu.setHeaderTitle("Que deseas hacer con " + datosJSON.getJSONObject(posicion).getJSONObject("value").getString("codigo"));
+        }catch (Exception e){
+            mostrarMsg("Error al mostrar el menu: "+ e.getMessage());
+        }
     }
-    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         try{
@@ -68,17 +135,8 @@ public class lista_amigos extends AppCompatActivity {
                     abrirActividad(paramatros);
                     break;
                 case R.id.mnxModificar:
-                    String[] amigos = {
-                            cAmigos.getString(0), //idAmigo
-                            cAmigos.getString(1), //nombre
-                            cAmigos.getString(2), //direccion
-                            cAmigos.getString(3), //telefono
-                            cAmigos.getString(4), //email
-                            cAmigos.getString(5), //dui
-                            cAmigos.getString(6), //foto
-                    };
                     paramatros.putString("accion", "modificar");
-                    paramatros.putStringArray("amigos", amigos);
+                    paramatros.putString("tienda", datosJSON.getJSONObject(posicion).toString());
                     abrirActividad(paramatros);
                     break;
                 case R.id.mnxEliminar:
@@ -94,17 +152,22 @@ public class lista_amigos extends AppCompatActivity {
     private void eliminarAmigo(){
         try {
             AlertDialog.Builder confirmar = new AlertDialog.Builder(lista_amigos.this);
-            confirmar.setTitle("Esta seguro de eliinar a: ");
-            confirmar.setMessage(cAmigos.getString(1));
+            confirmar.setTitle("Esta seguro de eliminar a: ");
+            confirmar.setMessage(datosJSON.getJSONObject(posicion).getJSONObject("value").getString("codigo"));
             confirmar.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    String respuesta = db.administrar_amigos("eliminar", new String[]{cAmigos.getString(0)});
-                    if( respuesta.equals("ok") ){
-                        mostrarMsg("Amigo eliminado con exito");
-                        obtenerAmigos();
-                    }else{
-                        mostrarMsg("Error al eliminar el amigo: "+ respuesta);
+                    try {
+                        String respuesta = db.administrar_amigos("eliminar",
+                                new String[]{"", "", datosJSON.getJSONObject(posicion).getJSONObject("value").getString("idProducto")});
+                        if (respuesta.equals("ok")) {
+                            mostrarMsg("Producto eliminado con exito");
+                            obtenerAmigos();
+                        } else {
+                            mostrarMsg("Error al eliminar el producto: " + respuesta);
+                        }
+                    }catch (Exception e){
+                        mostrarMsg("Error al eliminar datos: "+ e.getMessage());
                     }
                 }
             });
@@ -135,14 +198,16 @@ public class lista_amigos extends AppCompatActivity {
                         alAmigos.addAll(alAmigosCopy);
                     }else{
                         for (amigos amigo : alAmigosCopy){
-                            String nombre = amigo.getNombre();
-                            String direccion = amigo.getDireccion();
-                            String tel = amigo.getTelefono();
-                            String email = amigo.getEmail();
-                            if( nombre.trim().toLowerCase().contains(valor) ||
-                                    direccion.trim().toLowerCase().contains(valor) ||
-                                    tel.trim().contains(valor) ||
-                                    email.trim().toLowerCase().contains(valor)){
+                            String codigo = amigo.getCodigo();
+                            String descripcion = amigo.getDescripcion();
+                            String marca = amigo.getMarca();
+                            String presentacion = amigo.getPresentacion();
+                            String precio = amigo.getPrecio();
+                            if( codigo.trim().toLowerCase().contains(valor) ||
+                                    descripcion.trim().toLowerCase().contains(valor) ||
+                                    marca.trim().contains(valor) ||
+                                    presentacion.trim().toLowerCase().contains(valor)||
+                            precio.trim().toLowerCase().contains(valor)){
                                 alAmigos.add(amigo);
                             }
                         }
@@ -164,40 +229,37 @@ public class lista_amigos extends AppCompatActivity {
         abrirActividad.putExtras(parametros);
         startActivity(abrirActividad);
     }
-    private void obtenerAmigos(){
+    private void obtenerAmigos(){ //offline
         try{
-            alAmigos.clear();
-            alAmigosCopy.clear();
-
-            db = new DB(getApplicationContext(),"", null, 1);
             cAmigos = db.obtener_amigos();
             if( cAmigos.moveToFirst() ){
-                lts = findViewById(R.id.ltsAmigos);
+                datosJSON = new JSONArray();
                 do{
-                    datosAmigos = new amigos(
-                            cAmigos.getString(0),//idAmigo
-                            cAmigos.getString(1),//nombre
-                            cAmigos.getString(2),//direccion
-                            cAmigos.getString(3),//telefono
-                            cAmigos.getString(4),//email
-                            cAmigos.getString(5),//dui
-                            cAmigos.getString(6) //foto
-                    );
-                    alAmigos.add(datosAmigos);
+                    jsonObject = new JSONObject();
+                    JSONObject jsonObjectValue = new JSONObject();
+
+                    jsonObject.put("_id", cAmigos.getString(0));
+                    jsonObject.put("_rev", cAmigos.getString(1));
+                    jsonObject.put("idProducto", cAmigos.getString(2));
+                    jsonObject.put("codigo", cAmigos.getString(3));
+                    jsonObject.put("descripcion", cAmigos.getString(4));
+                    jsonObject.put("marca", cAmigos.getString(5));
+                    jsonObject.put("presentacion", cAmigos.getString(6));
+                    jsonObject.put("precio", cAmigos.getString(7));
+                    jsonObject.put("urlCompletaFoto", cAmigos.getString(8));
+                    jsonObjectValue.put("value", jsonObject);
+
+                    datosJSON.put(jsonObjectValue);
                 }while (cAmigos.moveToNext());
-                alAmigosCopy.addAll(alAmigos);
-
-                adaptadorimagenes adImagenes = new adaptadorimagenes(getApplicationContext(), alAmigos);
-                lts.setAdapter(adImagenes);
-
-                registerForContextMenu(lts);
+                mostrarMsg("Punto");
+                mostrarDatosAmigos();
             }else {
                 paramatros.putString("accion", "nuevo");
                 abrirActividad(paramatros);
-                mostrarMsg("No hay Datos de amigos.");
+                mostrarMsg("No hay Datos de productos.");
             }
         }catch (Exception e){
-            mostrarMsg("Error al obtener los amigos: "+ e.getMessage());
+            mostrarMsg("Error al obtener los productos : "+ e.getMessage());
         }
     }
     private void mostrarMsg(String msg){
