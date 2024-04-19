@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     TextView tempVal;
     String accion = "nuevo";
-    String id="", rev="", idProducto="";
+    String id="", rev="", idCarro="";
     String urlCompletaFoto;
     Intent tomarFotoIntent;
     ImageView img;
@@ -56,20 +56,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    tempVal = findViewById(R.id.txtCodigo);
-                    String codigo = tempVal.getText().toString();
-
-                    tempVal = findViewById(R.id.txtDescripcion);
-                    String descripcion = tempVal.getText().toString();
-
                     tempVal = findViewById(R.id.txtMarca);
                     String marca = tempVal.getText().toString();
 
-                    tempVal = findViewById(R.id.txtPresentacion);
-                    String presentacion = tempVal.getText().toString();
+                    tempVal = findViewById(R.id.txtMotor);
+                    String motor = tempVal.getText().toString();
 
-                    tempVal = findViewById(R.id.txtPrecio);
-                    String precio = tempVal.getText().toString();
+                    tempVal = findViewById(R.id.txtChasis);
+                    String chasis = tempVal.getText().toString();
+
+                    tempVal = findViewById(R.id.txtVIN);
+                    String VIN = tempVal.getText().toString();
+
+                    tempVal = findViewById(R.id.txtCombustion);
+                    String combustion = tempVal.getText().toString();
 
                     //guardar datos en el servidor
                     JSONObject datosAmigos = new JSONObject();
@@ -77,12 +77,12 @@ public class MainActivity extends AppCompatActivity {
                         datosAmigos.put("_id", id);
                         datosAmigos.put("_rev", rev);
                     }
-                    datosAmigos.put("idProducto", idProducto);
-                    datosAmigos.put("codigo", codigo);
-                    datosAmigos.put("descripcion", descripcion);
+                    datosAmigos.put("idCarro", idCarro);
                     datosAmigos.put("marca", marca);
-                    datosAmigos.put("presentacion", presentacion);
-                    datosAmigos.put("precio", precio);
+                    datosAmigos.put("motor", motor);
+                    datosAmigos.put("chasis", chasis);
+                    datosAmigos.put("VIN", VIN);
+                    datosAmigos.put("combustion", combustion);
                     datosAmigos.put("urlCompletaFoto", urlCompletaFoto);
 
                     String respuesta = "";
@@ -97,20 +97,20 @@ public class MainActivity extends AppCompatActivity {
                         mostrarMsg("Error al guardar datos en el servidor");
                     }
                     DB db = new DB(getApplicationContext(), "",null, 1);
-                    String[] datos = new String[]{id, rev, idProducto, codigo, descripcion, marca, presentacion, precio, urlCompletaFoto};
+                    String[] datos = new String[]{id, rev, idCarro, marca, motor, chasis, VIN, combustion, urlCompletaFoto};
                     respuesta = db.administrar_amigos(accion, datos);
                     if(respuesta.equals("ok")){
-                        Toast.makeText(getApplicationContext(), "Producto guardado con exito", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Carro guardado con exito", Toast.LENGTH_LONG).show();
                         abrirActividad();
                     }else{
-                        Toast.makeText(getApplicationContext(), "Error al intentar guardar el producto: "+ respuesta, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Error al intentar guardar el Carro: "+ respuesta, Toast.LENGTH_LONG).show();
                     }
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(), "Error: "+ e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         });
-        img = findViewById(R.id.btnImgProdu);
+        img = findViewById(R.id.btnImgCarros);
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -168,31 +168,31 @@ public class MainActivity extends AppCompatActivity {
 
             if(accion.equals("modificar")){
 
-                JSONObject jsonObject = new JSONObject(parametros.getString("tienda")).getJSONObject("value");
+                JSONObject jsonObject = new JSONObject(parametros.getString("carros")).getJSONObject("value");
                 id = jsonObject.getString("_id");
                 rev = jsonObject.getString("_rev");
-                idProducto = jsonObject.getString("idProducto");
-
-                tempVal = findViewById(R.id.txtCodigo);
-                tempVal.setText(jsonObject.getString("codigo"));
-
-                tempVal = findViewById(R.id.txtDescripcion);
-                tempVal.setText(jsonObject.getString("descripcion"));
+                idCarro = jsonObject.getString("idCarro");
 
                 tempVal = findViewById(R.id.txtMarca);
                 tempVal.setText(jsonObject.getString("marca"));
 
-                tempVal = findViewById(R.id.txtPresentacion);
-                tempVal.setText(jsonObject.getString("presentacion"));
+                tempVal = findViewById(R.id.txtMotor);
+                tempVal.setText(jsonObject.getString("motor"));
 
-                tempVal = findViewById(R.id.txtPrecio);
-                tempVal.setText(jsonObject.getString("precio"));
+                tempVal = findViewById(R.id.txtChasis);
+                tempVal.setText(jsonObject.getString("chasis"));
+
+                tempVal = findViewById(R.id.txtVIN);
+                tempVal.setText(jsonObject.getString("VIN"));
+
+                tempVal = findViewById(R.id.txtCombustion);
+                tempVal.setText(jsonObject.getString("combustion"));
 
                 urlCompletaFoto = jsonObject.getString("urlCompletaFoto");
                 Bitmap imageBitmap = BitmapFactory.decodeFile(urlCompletaFoto);
                 img.setImageBitmap(imageBitmap);
             }else{//nuevo registro
-                idProducto = utls.generarIdUnico();
+                idCarro = utls.generarIdUnico();
             }
         }catch (Exception e){
             mostrarMsg("Error al mostrar datos: "+ e.getMessage());

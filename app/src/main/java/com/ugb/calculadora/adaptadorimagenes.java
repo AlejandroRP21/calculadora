@@ -41,22 +41,22 @@ public class adaptadorimagenes extends BaseAdapter {
         try{
             datosAmigos = datosAmigosArrayList.get(i);
 
-            TextView tempVal = itemView.findViewById(R.id.lblcodigo);
-            tempVal.setText(datosAmigos.getCodigo());
-
-            tempVal = itemView.findViewById(R.id.lbldescripcion);
-            tempVal.setText(datosAmigos.getDescripcion());
-
-            tempVal = itemView.findViewById(R.id.lblprecio);
-            tempVal.setText(datosAmigos.getPrecio());
-
-            tempVal = itemView.findViewById(R.id.lblpresentacion);
-            tempVal.setText(datosAmigos.getPresentacion());
-
-            tempVal = itemView.findViewById(R.id.lblmarca);
+            TextView tempVal = itemView.findViewById(R.id.lblMarca);
             tempVal.setText(datosAmigos.getMarca());
 
-            Bitmap imageBitmap = BitmapFactory.decodeFile(datosAmigos.getUrlFotoProdu());
+            tempVal = itemView.findViewById(R.id.lblMotor);
+            tempVal.setText(datosAmigos.getMotor());
+
+            tempVal = itemView.findViewById(R.id.lblChasis);
+            tempVal.setText(datosAmigos.getChasis());
+
+            tempVal = itemView.findViewById(R.id.lblVIN);
+            tempVal.setText(datosAmigos.getVIN());
+
+            tempVal = itemView.findViewById(R.id.lblCombustion);
+            tempVal.setText(datosAmigos.getCombustion());
+
+            Bitmap imageBitmap = BitmapFactory.decodeFile(datosAmigos.getUrlFotoCarro());
             ImageView img = itemView.findViewById(R.id.imgFoto);
             img.setImageBitmap(imageBitmap);
         }catch (Exception e){

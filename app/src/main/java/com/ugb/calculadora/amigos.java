@@ -3,24 +3,24 @@ package com.ugb.calculadora;
 public class amigos {
     String _id;
     String _rev;
-    String idProducto;
-    String codigo;
-    String descripcion;
+    String idCarro;
     String marca;
-    String presentacion;
-    String precio;
-    String urlFotoProdu;
+    String motor;
+    String chasis;
+    String VIN;
+    String combustion;
+    String urlFotoCarro;
 
-    public amigos(String _id, String _rev, String idProducto, String descripcion, String marca, String presentacion, String precio, String codigo, String urlFoto) {
+    public amigos(String _id, String _rev, String idCarro, String marca, String motor, String chasis, String VIN, String combustion, String urlFoto) {
         this._id = _id;
         this._rev = _rev;
-        this.idProducto = idProducto;
-        this.codigo = codigo;
-        this.descripcion = descripcion;
+        this.idCarro= idCarro;
         this.marca = marca;
-        this.presentacion = presentacion;
-        this.precio = precio;
-        this.urlFotoProdu = urlFoto;
+        this.motor = motor;
+        this.chasis = chasis;
+        this.VIN = VIN;
+        this.combustion = combustion;
+        this.urlFotoCarro = urlFoto;
     }
     public String get_id() {
         return _id;
@@ -34,36 +34,20 @@ public class amigos {
     public void set_rev(String _rev) {
         this._rev = _rev;
     }
-    public String getUrlFotoProdu() {
-        return urlFotoProdu;
+    public String getUrlFotoCarro() {
+        return urlFotoCarro;
     }
 
-    public void setUrlFotoProdu(String urlFotoProdu) {
-        this.urlFotoProdu = urlFotoProdu;
+    public void setUrlFotoCarro(String urlFotoCarro) {
+        this.urlFotoCarro = urlFotoCarro;
     }
 
-    public String getIdproductos() {
-        return idProducto;
+    public String getIdCarro() {
+        return idCarro;
     }
 
-    public void setIdproductos(String idproductos) {
-        this.idProducto = idproductos;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setIdCarro(String idCarro) {
+        this.idCarro = idCarro;
     }
 
     public String getMarca() {
@@ -74,19 +58,35 @@ public class amigos {
         this.marca = marca;
     }
 
-    public String getPresentacion() {
-        return presentacion;
+    public String getMotor() {
+        return motor;
     }
 
-    public void setPresentacion(String presentacion) {
-        this.presentacion = presentacion;
+    public void setMotor(String motor) {
+        this.motor = motor;
     }
 
-    public String getPrecio() {
-        return precio;
+    public String getVIN() {
+        return VIN;
     }
 
-    public void setPrecio(String precio) {
-        this.precio = precio;
+    public void setVIN(String VIN) {
+        this.VIN = VIN;
+    }
+
+    public String getChasis() {
+        return chasis;
+    }
+
+    public void setChasis(String chasis) {
+        this.chasis = chasis;
+    }
+
+    public String getCombustion() {
+        return combustion;
+    }
+
+    public void setCombustion(String combustion) {
+        this.combustion = combustion;
     }
 }

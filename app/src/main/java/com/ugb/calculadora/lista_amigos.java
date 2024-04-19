@@ -61,7 +61,7 @@ public class lista_amigos extends AppCompatActivity {
                 obtenerAmigos();
             }
         }catch (Exception e){
-            mostrarMsg("Error al cargar lista amigo: "+ e.getMessage());
+            mostrarMsg("Error al cargar lista carros: "+ e.getMessage());
         }
         buscarAmigos();
     }
@@ -74,7 +74,7 @@ public class lista_amigos extends AppCompatActivity {
             datosJSON = jsonObject.getJSONArray("rows");
             mostrarDatosAmigos();
         }catch (Exception e){
-            mostrarMsg("Error al obtener datos de productos del server: "+ e.getMessage());
+            mostrarMsg("Error al obtener datos de carro del server: "+ e.getMessage());
         }
     }
     private void mostrarDatosAmigos(){
@@ -90,12 +90,12 @@ public class lista_amigos extends AppCompatActivity {
                     datosAmigos = new amigos(
                             misDatosJSONObject.getString("_id"),
                             misDatosJSONObject.getString("_rev"),
-                            misDatosJSONObject.getString("idProducto"),
-                            misDatosJSONObject.getString("codigo"),
-                            misDatosJSONObject.getString("descripcion"),
+                            misDatosJSONObject.getString("idCarro"),
                             misDatosJSONObject.getString("marca"),
-                            misDatosJSONObject.getString("presentacion"),
-                            misDatosJSONObject.getString("precio"),
+                            misDatosJSONObject.getString("motor"),
+                            misDatosJSONObject.getString("chasis"),
+                            misDatosJSONObject.getString("VIN"),
+                            misDatosJSONObject.getString("combustion"),
                             misDatosJSONObject.getString("urlCompletaFoto")
                     );
                     alAmigos.add(datosAmigos);
@@ -121,7 +121,7 @@ public class lista_amigos extends AppCompatActivity {
         try {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
             posicion = info.position;
-            menu.setHeaderTitle("Que deseas hacer con " + datosJSON.getJSONObject(posicion).getJSONObject("value").getString("codigo"));
+            menu.setHeaderTitle("Que deseas hacer con " + datosJSON.getJSONObject(posicion).getJSONObject("value").getString("marca"));
         }catch (Exception e){
             mostrarMsg("Error al mostrar el menu: "+ e.getMessage());
         }
@@ -136,7 +136,7 @@ public class lista_amigos extends AppCompatActivity {
                     break;
                 case R.id.mnxModificar:
                     paramatros.putString("accion", "modificar");
-                    paramatros.putString("tienda", datosJSON.getJSONObject(posicion).toString());
+                    paramatros.putString("carros", datosJSON.getJSONObject(posicion).toString());
                     abrirActividad(paramatros);
                     break;
                 case R.id.mnxEliminar:
@@ -153,18 +153,18 @@ public class lista_amigos extends AppCompatActivity {
         try {
             AlertDialog.Builder confirmar = new AlertDialog.Builder(lista_amigos.this);
             confirmar.setTitle("Esta seguro de eliminar a: ");
-            confirmar.setMessage(datosJSON.getJSONObject(posicion).getJSONObject("value").getString("codigo"));
+            confirmar.setMessage(datosJSON.getJSONObject(posicion).getJSONObject("value").getString("marca"));
             confirmar.setPositiveButton("SI", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     try {
                         String respuesta = db.administrar_amigos("eliminar",
-                                new String[]{"", "", datosJSON.getJSONObject(posicion).getJSONObject("value").getString("idProducto")});
+                                new String[]{"", "", datosJSON.getJSONObject(posicion).getJSONObject("value").getString("idCarro")});
                         if (respuesta.equals("ok")) {
-                            mostrarMsg("Producto eliminado con exito");
+                            mostrarMsg("Carro eliminado con exito");
                             obtenerAmigos();
                         } else {
-                            mostrarMsg("Error al eliminar el producto: " + respuesta);
+                            mostrarMsg("Error al eliminar el carro: " + respuesta);
                         }
                     }catch (Exception e){
                         mostrarMsg("Error al eliminar datos: "+ e.getMessage());
@@ -198,16 +198,16 @@ public class lista_amigos extends AppCompatActivity {
                         alAmigos.addAll(alAmigosCopy);
                     }else{
                         for (amigos amigo : alAmigosCopy){
-                            String codigo = amigo.getCodigo();
-                            String descripcion = amigo.getDescripcion();
                             String marca = amigo.getMarca();
-                            String presentacion = amigo.getPresentacion();
-                            String precio = amigo.getPrecio();
-                            if( codigo.trim().toLowerCase().contains(valor) ||
-                                    descripcion.trim().toLowerCase().contains(valor) ||
-                                    marca.trim().contains(valor) ||
-                                    presentacion.trim().toLowerCase().contains(valor)||
-                            precio.trim().toLowerCase().contains(valor)){
+                            String motor = amigo.getMotor();
+                            String chasis = amigo.getChasis();
+                            String VIN = amigo.getVIN();
+                            String combustion = amigo.getCombustion();
+                            if( marca.trim().toLowerCase().contains(valor) ||
+                                    motor.trim().toLowerCase().contains(valor) ||
+                                    chasis.trim().contains(valor) ||
+                                    VIN.trim().toLowerCase().contains(valor)||
+                            combustion.trim().toLowerCase().contains(valor)){
                                 alAmigos.add(amigo);
                             }
                         }
@@ -240,12 +240,12 @@ public class lista_amigos extends AppCompatActivity {
 
                     jsonObject.put("_id", cAmigos.getString(0));
                     jsonObject.put("_rev", cAmigos.getString(1));
-                    jsonObject.put("idProducto", cAmigos.getString(2));
-                    jsonObject.put("codigo", cAmigos.getString(3));
-                    jsonObject.put("descripcion", cAmigos.getString(4));
-                    jsonObject.put("marca", cAmigos.getString(5));
-                    jsonObject.put("presentacion", cAmigos.getString(6));
-                    jsonObject.put("precio", cAmigos.getString(7));
+                    jsonObject.put("idCarro", cAmigos.getString(2));
+                    jsonObject.put("marca", cAmigos.getString(3));
+                    jsonObject.put("motor", cAmigos.getString(4));
+                    jsonObject.put("chasis", cAmigos.getString(5));
+                    jsonObject.put("VIN", cAmigos.getString(6));
+                    jsonObject.put("combustion", cAmigos.getString(7));
                     jsonObject.put("urlCompletaFoto", cAmigos.getString(8));
                     jsonObjectValue.put("value", jsonObject);
 
@@ -256,10 +256,10 @@ public class lista_amigos extends AppCompatActivity {
             }else {
                 paramatros.putString("accion", "nuevo");
                 abrirActividad(paramatros);
-                mostrarMsg("No hay Datos de productos.");
+                mostrarMsg("No hay Datos de carros.");
             }
         }catch (Exception e){
-            mostrarMsg("Error al obtener los productos : "+ e.getMessage());
+            mostrarMsg("Error al obtener los carror : "+ e.getMessage());
         }
     }
     private void mostrarMsg(String msg){
