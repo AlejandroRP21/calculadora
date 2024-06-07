@@ -1,4 +1,4 @@
-package com.ugb.calculadora;
+package com.ugb.controlesbasicos;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

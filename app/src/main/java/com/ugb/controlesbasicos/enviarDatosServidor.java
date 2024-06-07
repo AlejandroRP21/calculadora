@@ -1,8 +1,9 @@
-package com.ugb.calculadora;
+package com.ugb.controlesbasicos;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStream;
