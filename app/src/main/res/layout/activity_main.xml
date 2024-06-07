@@ -16,50 +16,54 @@
     <EditText
         android:id="@+id/txtnombre"
         android:inputType="textPersonName"
-        android:hint="Nombre"
+        android:hint="Nombre del autor"
         android:layout_below="@+id/btnImgAmigo"
         android:layout_marginTop="40dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/txtdireccion"
-        android:hint="Direccion"
+        android:id="@+id/txtTitulo"
+        android:hint="Titulo"
         android:inputType="textMultiLine"
         android:layout_below="@id/txtnombre"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/txtTelefono"
-        android:hint="Telefono"
-        android:inputType="phone"
-        android:layout_below="@id/txtdireccion"
+        android:id="@+id/txtEmocion"
+        android:hint="Escribe tu emocion"
+        android:inputType="textMultiLine"
+        android:layout_below="@id/txtTitulo"
         android:layout_marginTop="40dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <EditText
-        android:id="@+id/txtemail"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:layout_below="@id/txtTelefono"
+        android:id="@+id/txtContenido"
+        android:hint="Comparte algo sobre esto a otros usuarios"
+        android:inputType="textMultiLine"
+        android:layout_below="@id/txtEmocion"
         android:layout_marginTop="40dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginRight="32dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <EditText
-        android:id="@+id/txtdui"
-        android:inputType="number"
-        android:hint="DUI"
-        android:layout_below="@id/txtemail"
-        android:layout_marginTop="40dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/btnGuardarAgendaAmigos"
-        android:layout_below="@id/txtdui"
+        android:layout_below="@id/txtContenido"
         android:layout_marginTop="40dp"
-        android:text="GUARDAR AMIGO"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="32dp"
+        android:text="GUARDAR SENTIMIENTO"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="@drawable/bottonredondeado"/>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabListarAmigos"
         android:layout_width="wrap_content"
@@ -71,5 +75,15 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:src="@android:drawable/ic_menu_revert" />
+
+    <TextView
+        android:id="@+id/lblSensorLuz"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnGuardarAgendaAmigos"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="32dp"
+        android:text="Luz: ?"
+        android:textColor="@color/black" />
 
 </RelativeLayout>
