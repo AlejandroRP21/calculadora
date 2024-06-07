@@ -1,6 +1,5 @@
 package controlesbasicos;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,9 +18,9 @@ public class adaptadorimagenes extends BaseAdapter {
     ArrayList<amigos> datosAmigosArrayList;
     amigos datosAmigos;
     LayoutInflater layoutInflater;
-    public adaptadorimagenes(Context context, ArrayList<amigos> datosAmigosArrayList) {
+    public adaptadorimagenes(Context context, ArrayList<amigos> datosProductosArrayList) {
         this.context = context;
-        this.datosAmigosArrayList = datosAmigosArrayList;
+        this.datosAmigosArrayList = datosProductosArrayList;
     }
     @Override
     public int getCount() {
@@ -33,9 +32,8 @@ public class adaptadorimagenes extends BaseAdapter {
     }
     @Override
     public long getItemId(int i) {
-        return i; //Long.parseLong(datosAmigosArrayList.get(i).getIdAmigo());
+        return i;//Long.parseLong(datosProductosArrayList.get(i).getIdproductos());
     }
-    @SuppressLint("MissingInflatedId")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         layoutInflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -43,16 +41,22 @@ public class adaptadorimagenes extends BaseAdapter {
         try{
             datosAmigos = datosAmigosArrayList.get(i);
 
-            TextView tempVal = itemView.findViewById(R.id.lblnombre);
-            tempVal.setText(datosAmigos.getNombre());
+            TextView tempVal = itemView.findViewById(R.id.lblMarca);
+            tempVal.setText(datosAmigos.getMarca());
 
-            tempVal = itemView.findViewById(R.id.lbltitulo);
-            tempVal.setText(datosAmigos.getTitulo());
+            tempVal = itemView.findViewById(R.id.lblMotor);
+            tempVal.setText(datosAmigos.getMotor());
 
-            tempVal = itemView.findViewById(R.id.lblemocion);
-            tempVal.setText(datosAmigos.getEmocion());
+            tempVal = itemView.findViewById(R.id.lblChasis);
+            tempVal.setText(datosAmigos.getChasis());
 
-            Bitmap imageBitmap = BitmapFactory.decodeFile(datosAmigos.getUrlFotoAmigo());
+            tempVal = itemView.findViewById(R.id.lblVIN);
+            tempVal.setText(datosAmigos.getVIN());
+
+            tempVal = itemView.findViewById(R.id.lblCombustion);
+            tempVal.setText(datosAmigos.getCombustion());
+
+            Bitmap imageBitmap = BitmapFactory.decodeFile(datosAmigos.getUrlFotoCarro());
             ImageView img = itemView.findViewById(R.id.imgFoto);
             img.setImageBitmap(imageBitmap);
         }catch (Exception e){

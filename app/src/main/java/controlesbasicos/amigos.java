@@ -1,88 +1,92 @@
 package controlesbasicos;
 
 public class amigos {
-    String idNota;
-    String nombre;
-    String titulo;
-    String emocion;
-    String contenido;
-    String urlFotoAmigo;
-    String urlFotoAmigoFirestore;
-    String token;
+    String _id;
+    String _rev;
+    String idCarro;
+    String marca;
+    String motor;
+    String chasis;
+    String VIN;
+    String combustion;
+    String urlFotoCarro;
 
-    public amigos(){}
-    public amigos(String idNota, String nombre, String titulo, String emocion, String contenido, String urlFoto, String urlFotoAmigoFirestore, String token) {
-        this.idNota = idNota;
-        this.nombre = nombre;
-        this.titulo = titulo;
-        this.emocion = emocion;
-        this.contenido = contenido;
-        this.urlFotoAmigo = urlFoto;
-        this.urlFotoAmigoFirestore = urlFotoAmigoFirestore;
-        this.token = token;
+    public amigos(String _id, String _rev, String idCarro, String marca, String motor, String chasis, String VIN, String combustion, String urlFoto) {
+        this._id = _id;
+        this._rev = _rev;
+        this.idCarro= idCarro;
+        this.marca = marca;
+        this.motor = motor;
+        this.chasis = chasis;
+        this.VIN = VIN;
+        this.combustion = combustion;
+        this.urlFotoCarro = urlFoto;
+    }
+    public String get_id() {
+        return _id;
+    }
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+    public String get_rev() {
+        return _rev;
+    }
+    public void set_rev(String _rev) {
+        this._rev = _rev;
+    }
+    public String getUrlFotoCarro() {
+        return urlFotoCarro;
     }
 
-    public String getUrlFotoAmigoFirestore() {
-        return urlFotoAmigoFirestore;
+    public void setUrlFotoCarro(String urlFotoCarro) {
+        this.urlFotoCarro = urlFotoCarro;
     }
 
-    public void setUrlFotoAmigoFirestore(String urlFotoAmigoFirestore) {
-        this.urlFotoAmigoFirestore = urlFotoAmigoFirestore;
+    public String getIdCarro() {
+        return idCarro;
     }
 
-    public String getToken() {
-        return token;
+    public void setIdCarro(String idCarro) {
+        this.idCarro = idCarro;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public String getMarca() {
+        return marca;
     }
 
-    public String getUrlFotoAmigo() {
-        return urlFotoAmigo;
+    public void setMarca(String marca) {
+        this.marca = marca;
     }
 
-    public void setUrlFotoAmigo(String urlFotoAmigo) {
-        this.urlFotoAmigo = urlFotoAmigo;
+    public String getMotor() {
+        return motor;
     }
 
-    public String getNombre() {
-        return nombre;
+    public void setMotor(String motor) {
+        this.motor = motor;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getVIN() {
+        return VIN;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public void setVIN(String VIN) {
+        this.VIN = VIN;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public String getChasis() {
+        return chasis;
     }
 
-    public String getIdNota() {
-        return idNota;
+    public void setChasis(String chasis) {
+        this.chasis = chasis;
     }
 
-    public void setIdNota(String idNota) {
-        this.idNota = idNota;
+    public String getCombustion() {
+        return combustion;
     }
 
-    public String getEmocion() {
-        return emocion;
-    }
-
-    public void setEmocion(String emocion) {
-        this.emocion = emocion;
-    }
-
-    public String getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
+    public void setCombustion(String combustion) {
+        this.combustion = combustion;
     }
 }
