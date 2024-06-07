@@ -3,15 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".lista_produ">
+    tools:context=".lista_amigos">
 
     <EditText
-        android:id="@+id/txtBuscarProdu"
-        android:hint="Buscar Producto"
+        android:id="@+id/txtBuscarAmigos"
+        android:hint="Buscar Amigos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <ListView
-        android:id="@+id/ltsProducto"
+        android:id="@+id/ltsAmigos"
         android:layout_marginTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
